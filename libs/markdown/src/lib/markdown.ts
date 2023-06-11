@@ -7,19 +7,22 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { join } from 'path';
 
 interface ParsedFile {
-  title: string;
   content: string;
+  frontMatter: {
+    title: string;
+    tags: string[];
+  };
 }
 
 export function parseFileBySlug(
   fileName: string,
   articlesPath: string
 ): ParsedFile {
-  const path = join(articlesPath, `${fileName}.md`);
+  const path = join(articlesPath, `${fileName}.mdx`);
   const fileRawContent = readFileSync(path);
   const { data, content } = matter(fileRawContent);
 
-  return { title: data.title, content };
+  return { frontMatter: { title: data.title, tags: data.tags }, content };
 }
 
 export async function renderMarkdown(markDownContent = '') {
