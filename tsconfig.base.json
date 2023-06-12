@@ -21,7 +21,8 @@
       "@rderandom/markdown/server": ["markdown/src/server.ts"],
       "@rderandom/shared/mdx-elements": [
         "libs/shared/mdx-elements/src/index.ts"
-      ]
+      ],
+      "@rderandom/shared/mdx-elements/*": ["libs/shared/mdx-elements/src/lib/*"]
     }
   },
   "exclude": [

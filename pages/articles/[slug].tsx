@@ -4,9 +4,9 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { ParsedUrlQuery } from 'querystring';
 
 import { parseFileBySlug, renderMarkdown } from '@rderandom/libs/markdown';
-import { Youtube } from '@rderandom/shared/mdx-elements';
 
 import { POSTS_PATH } from './constants';
+import dynamic from 'next/dynamic';
 
 interface ArticleParams extends ParsedUrlQuery {
   slug: string;
@@ -19,7 +19,22 @@ interface ArticleProps {
 }
 
 const mdxComponents = {
-  Youtube,
+  Youtube: dynamic(
+    () => {
+      return import('@rderandom/shared/mdx-elements/youtube/youtube');
+    },
+    {
+      loading: () => <p>Loading...</p>,
+    }
+  ),
+  a: dynamic(
+    () => {
+      return import('@rderandom/shared/mdx-elements/custom-link/custom-link');
+    },
+    {
+      loading: () => <p>Loading...</p>,
+    }
+  ),
 };
 
 export default function Article({
